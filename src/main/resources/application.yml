@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: cxl1123ZML
+    url: jdbc:mysql://localhost:3306/mall?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
