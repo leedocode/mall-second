@@ -21,4 +21,10 @@ public class MallSecondApplicationTests {
         System.out.println(category.toString());
     }
 
+    @Test
+    public void testQueryById() {
+        Category category = categoryMapper.queryById(100001);
+        System.out.println(category.toString());
+    }
+
 }
