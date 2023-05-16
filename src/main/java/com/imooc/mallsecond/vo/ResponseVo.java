@@ -35,6 +35,10 @@ public class ResponseVo<T> {
         return new ResponseVo<>(responseEnum.getCode(), responseEnum.getDesc());
     }
 
+    public static <T> ResponseVo<T> error(ResponseEnum responseEnum, String msg) {
+        return new ResponseVo<>(responseEnum.getCode(), msg);
+    }
+
     public static <T> ResponseVo<T> error(ResponseEnum responseEnum, BindingResult bindingResult) {
         return new ResponseVo<>(responseEnum.getCode(),
                 Objects.requireNonNull(bindingResult.getFieldError()).getField() + " " + bindingResult.getFieldError().getDefaultMessage());
