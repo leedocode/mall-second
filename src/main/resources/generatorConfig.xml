@@ -36,10 +36,17 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="mall_order" domainObjectName="Order" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false">
-        </table>
-        <table tableName="mall_order_item" domainObjectName="OrderItem" enableCountByExample="false"
+<!--        <table tableName="mall_order" domainObjectName="Order" enableCountByExample="false"-->
+<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false">-->
+<!--        </table>-->
+<!--        <table tableName="mall_order_item" domainObjectName="OrderItem" enableCountByExample="false"-->
+<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false">-->
+<!--        </table>-->
+<!--        <table tableName="mall_pay_info" domainObjectName="PayInfo" enableCountByExample="false"-->
+<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false">-->
+<!--        </table>-->
+
+        <table tableName="mall_user" domainObjectName="User" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false">
         </table>
 
