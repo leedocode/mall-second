@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
  */
 
 @Data
-public class UserForm {
+public class UserLoginForm {
 
     @NotBlank
     private String username;
@@ -17,6 +17,4 @@ public class UserForm {
     @NotBlank
     private String password;
 
-    @NotBlank
-    private String email;
 }

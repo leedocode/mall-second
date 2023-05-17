@@ -23,7 +23,7 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     UserMapper userMapper;
     @Override
-    public ResponseVo register(User user) {
+    public ResponseVo<?> register(User user) {
 
         user.setRole(RoleEnum.CUSTOMER.getCode());
         //username 不能重复
@@ -48,5 +48,19 @@ public class UserServiceImpl implements IUserService {
         }
 
         return ResponseVo.success();
+    }
+
+    @Override
+    public ResponseVo<User> login(String username, String password) {
+        User user = userMapper.selectByUsername(username);
+        if (user == null) {
+            //用户不存在
+            return ResponseVo.error(ResponseEnum.USERNAME_OR_PASSWORD_ERROR);
+        }
+
+        if (!user.getPassword().equalsIgnoreCase(DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8)))) {
+            return ResponseVo.error(ResponseEnum.USERNAME_OR_PASSWORD_ERROR);
+        }
+        return ResponseVo.success(user);
     }
 }
