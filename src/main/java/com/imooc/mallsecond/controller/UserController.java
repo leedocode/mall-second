@@ -63,20 +63,21 @@ public class UserController {
 
     @GetMapping("/user")
     public ResponseVo<User> userInfo(HttpSession session) {
+        log.info("/user sessionId={}", session.getId());
         User user = (User)session.getAttribute(MallConst.CURRENT_USER);
-        if (user == null) {
-            return ResponseVo.error(ResponseEnum.NEED_LOGIN);
-        }
+//        if (user == null) {
+//            return ResponseVo.error(ResponseEnum.NEED_LOGIN);
+//        }
         return ResponseVo.success(user);
     }
 
     @GetMapping("/user/logout")
     public ResponseVo logout(HttpSession session) {
-        log.info("sessionId = {}", session.getId());
-        User user = (User) session.getAttribute(MallConst.CURRENT_USER);
-        if (user == null) {
-            return ResponseVo.error(ResponseEnum.ERROR);
-        }
+        log.info("/user/logout sessionId = {}", session.getId());
+//        User user = (User) session.getAttribute(MallConst.CURRENT_USER);
+//        if (user == null) {
+//            return ResponseVo.error(ResponseEnum.ERROR);
+//        }
         session.removeAttribute(MallConst.CURRENT_USER);
         return ResponseVo.successForMsg("退出成功");
     }

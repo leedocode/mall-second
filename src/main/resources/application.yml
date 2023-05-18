@@ -10,3 +10,8 @@ mybatis:
     #控制台日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mappers/*.xml
+
+excludeurl:
+  strings:
+    - /user/login
+    - /user/register

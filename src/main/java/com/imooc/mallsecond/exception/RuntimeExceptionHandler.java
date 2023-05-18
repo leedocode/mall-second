@@ -17,11 +17,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 public class RuntimeExceptionHandler {
 
-    @ExceptionHandler
+    @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseVo handleRuntimeException(RuntimeException e) {
         log.error("RuntimeException: ", e);
         return ResponseVo.error(ResponseEnum.ERROR, e.getMessage());
+    }
+
+    @ExceptionHandler(UserLoginException.class)
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseVo handleUserLoginException(UserLoginException e) {
+        log.error("UserLoginException: ", e);
+        return ResponseVo.error(ResponseEnum.NEED_LOGIN);
     }
 }
