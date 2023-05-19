@@ -15,3 +15,4 @@ excludeurl:
   strings:
     - /user/login
     - /user/register
+    - /categories

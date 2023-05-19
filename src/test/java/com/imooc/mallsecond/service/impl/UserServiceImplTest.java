@@ -4,6 +4,7 @@ import com.imooc.mallsecond.MallSecondApplicationTests;
 import com.imooc.mallsecond.enums.ResponseEnum;
 import com.imooc.mallsecond.enums.RoleEnum;
 import com.imooc.mallsecond.pojo.User;
+import com.imooc.mallsecond.service.ICategoryService;
 import com.imooc.mallsecond.service.IUserService;
 import com.imooc.mallsecond.vo.ResponseVo;
 import org.junit.Assert;
@@ -22,6 +23,10 @@ public class UserServiceImplTest extends MallSecondApplicationTests {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private ICategoryService categoryService;
+
     @Before
     public void registerTest() {
         User user = new User(USERNAME, PASSWORD, EMAIL, RoleEnum.CUSTOMER.getCode());

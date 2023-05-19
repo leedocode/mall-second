@@ -46,9 +46,12 @@
 <!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false">-->
 <!--        </table>-->
 
-        <table tableName="mall_user" domainObjectName="User" enableCountByExample="false"
-               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false">
-        </table>
+<!--        <table tableName="mall_user" domainObjectName="User" enableCountByExample="false"-->
+<!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false">-->
+<!--        </table>-->
+            <table tableName="mall_category" domainObjectName="Category" enableCountByExample="false"
+                   enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false">
+            </table>
 
     </context>
 </generatorConfiguration>

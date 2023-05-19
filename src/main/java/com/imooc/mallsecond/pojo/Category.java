@@ -4,10 +4,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-/**
- * 描述: TODO
- */
-
 @Data
 public class Category {
     private Integer id;
@@ -16,7 +12,7 @@ public class Category {
 
     private String name;
 
-    private Integer status;
+    private Boolean status;
 
     private Integer sortOrder;
 
