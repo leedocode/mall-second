@@ -16,3 +16,4 @@ excludeurl:
     - /user/login
     - /user/register
     - /categories
+    - /products

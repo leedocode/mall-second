@@ -1,5 +1,7 @@
 package com.imooc.mallsecond.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.imooc.mallsecond.dao.ProductMapper;
 import com.imooc.mallsecond.pojo.Product;
 import com.imooc.mallsecond.service.ICategoryService;
@@ -28,12 +30,13 @@ public class ProductServiceImpl implements IProductService {
     private ProductMapper productMapper;
 
     @Override
-    public ResponseVo<List<ProductVo>> list(Integer categoryId, Integer pageNum, Integer pageSize) {
+    public ResponseVo<PageInfo> list(Integer categoryId, Integer pageNum, Integer pageSize) {
         Set<Integer> categoryIdSet = new HashSet<>();
         if (categoryId != null) {
             categoryService.findSubCategoryId(categoryId, categoryIdSet);
             categoryIdSet.add(categoryId);
         }
+        PageHelper.startPage(pageNum, pageSize);
         List<Product> products = productMapper.selectByCategoryIdSet(categoryIdSet);
         List<ProductVo> productVoList = new ArrayList<>();
         for (Product product : products) {
@@ -41,6 +44,8 @@ public class ProductServiceImpl implements IProductService {
             BeanUtils.copyProperties(product, productVo);
             productVoList.add(productVo);
         }
-        return ResponseVo.success(productVoList);
+        PageInfo pageInfo = new PageInfo(products);
+        pageInfo.setList(productVoList);
+        return ResponseVo.success(pageInfo);
     }
 }
