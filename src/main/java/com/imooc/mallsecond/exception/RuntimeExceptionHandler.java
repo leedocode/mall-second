@@ -4,6 +4,8 @@ import com.imooc.mallsecond.enums.ResponseEnum;
 import com.imooc.mallsecond.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,5 +33,15 @@ public class RuntimeExceptionHandler {
     public ResponseVo handleUserLoginException(UserLoginException e) {
         log.error("UserLoginException: ", e);
         return ResponseVo.error(ResponseEnum.NEED_LOGIN);
+    }
+
+    //统一检查请求中的参数是否都存在且合法
+    //因为如果参数不合法就会抛出下面这个异常
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ResponseVo handleNotValidException(MethodArgumentNotValidException e) {
+        log.error("MethodArgumentNotValidException: ", e);
+        BindingResult bindingResult = e.getBindingResult();
+        return ResponseVo.error(ResponseEnum.PARAM_ERROR, bindingResult);
     }
 }

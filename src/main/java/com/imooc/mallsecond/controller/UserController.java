@@ -1,7 +1,6 @@
 package com.imooc.mallsecond.controller;
 
 import com.imooc.mallsecond.consts.MallConst;
-import com.imooc.mallsecond.enums.ResponseEnum;
 import com.imooc.mallsecond.form.UserLoginForm;
 import com.imooc.mallsecond.form.UserRegisterForm;
 import com.imooc.mallsecond.pojo.User;
@@ -10,7 +9,6 @@ import com.imooc.mallsecond.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,14 +29,7 @@ public class UserController {
     IUserService userService;
 
     @PostMapping("/user/register")
-    public ResponseVo<?> register(@Valid @RequestBody UserRegisterForm userRegisterForm, BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            log.error("注册提交的参数有误, {} {}",
-                    bindingResult.getFieldError().getField(),
-                    bindingResult.getFieldError().getDefaultMessage());
-            return ResponseVo.error(ResponseEnum.PARAM_ERROR,bindingResult);
-        }
+    public ResponseVo<?> register(@Valid @RequestBody UserRegisterForm userRegisterForm) {
 
         User user = new User();
         BeanUtils.copyProperties(userRegisterForm, user);
@@ -48,14 +39,8 @@ public class UserController {
 
     @PostMapping("/user/login")
     public ResponseVo<User> login(@Valid @RequestBody UserLoginForm userLoginForm,
-                               BindingResult bindingResult,
                                HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            log.error("登录提交的参数有误, {} {}",
-                    bindingResult.getFieldError().getField(),
-                    bindingResult.getFieldError().getDefaultMessage());
-            return ResponseVo.error(ResponseEnum.PARAM_ERROR,bindingResult);
-        }
+        //对请求中参数的检验放到了统一异常处理中
         ResponseVo<User> userResponseVo = userService.login(userLoginForm.getUsername(), userLoginForm.getPassword());
         session.setAttribute(MallConst.CURRENT_USER, userResponseVo.getData());
         return userResponseVo;

@@ -4,6 +4,9 @@ spring:
     username: root
     password: cxl1123ZML
     url: jdbc:mysql://localhost:3306/mall?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+  redis:
+    host: 127.0.0.1
+    port: 6379
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -17,3 +20,7 @@ excludeurl:
     - /user/register
     - /categories
     - /products
+    # /products/*匹配的是下一级路径，而/products/**匹配的是任意层级的路径
+    - /products/*
+    - /carts
+    - /error
