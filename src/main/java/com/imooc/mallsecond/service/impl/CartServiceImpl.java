@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 描述: TODO
@@ -90,10 +88,24 @@ public class CartServiceImpl implements ICartService {
         Integer cartTotalQuantity = 0;
         BigDecimal cartTotalPrice = new BigDecimal("0");
 
+        // 使用一个set,存入所有redis中出现的商品id，然后通过mysql in 关键字 一次查出所有商品相关的数据
+        Set<Integer> productIdSet = new HashSet<>();
+        for (Map.Entry<String, String> entry : entries.entrySet()) {
+            Integer productId = Integer.valueOf(entry.getKey());
+            productIdSet.add(productId);
+        }
+        List<Product> products = productMapper.selectByProductIdSet(productIdSet);
+        //使用map方便后续对相应product的获取
+        Map<Integer, Product> productMap = new HashMap<>();
+        for (Product product : products) {
+            productMap.put(product.getId(), product);
+        }
+
+
         for (Map.Entry<String, String> entry : entries.entrySet()) {
             Integer productId = Integer.valueOf(entry.getKey());
             Cart cart = gson.fromJson(entry.getValue(), Cart.class);
-            Product product = productMapper.selectByPrimaryKey(productId);
+            Product product = productMap.get(productId);
             if (product != null) {
                 CartProductVo cartProductVo = new CartProductVo(
                         productId,
