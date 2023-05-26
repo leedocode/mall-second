@@ -22,5 +22,4 @@ excludeurl:
     - /products
     # /products/*匹配的是下一级路径，而/products/**匹配的是任意层级的路径
     - /products/*
-    - /carts
     - /error

@@ -49,4 +49,22 @@ public class ICartServiceTest extends MallSecondApplicationTests {
         log.info("delete={}", gson.toJson(responseVo));
     }
 
+    @Test
+    public void sumTest() {
+        ResponseVo<Integer> sum = cartService.sum(1);
+        log.info("sum={}",gson.toJson(sum));
+    }
+
+    @Test
+    public void selectAllTest() {
+        ResponseVo<CartVo> responseVo = cartService.selectAll(1);
+        log.info("responseVo={}", gson.toJson(responseVo));
+    }
+
+    @Test
+    public void unSelectAllTest() {
+        ResponseVo<CartVo> responseVo = cartService.unSelectAll(1);
+        log.info("responseVo={}", gson.toJson(responseVo));
+    }
+
 }
