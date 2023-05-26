@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.imooc.mallsecond.MallSecondApplicationTests;
 import com.imooc.mallsecond.form.CartAddForm;
+import com.imooc.mallsecond.form.CartUpdateForm;
 import com.imooc.mallsecond.vo.CartVo;
 import com.imooc.mallsecond.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,21 @@ public class ICartServiceTest extends MallSecondApplicationTests {
     public void listTest() {
         ResponseVo<CartVo> responseVo = cartService.list(1);
         log.info("list={}", gson.toJson(responseVo));
+    }
+
+    @Test
+    public void updateTest() {
+        CartUpdateForm cartUpdateForm = new CartUpdateForm();
+        cartUpdateForm.setQuantity(5);
+        cartUpdateForm.setSelected(false);
+        ResponseVo<CartVo> responseVo = cartService.update(1, 26, cartUpdateForm);
+        log.info("update={}", gson.toJson(responseVo));
+    }
+
+    @Test
+    public void delete() {
+        ResponseVo<CartVo> responseVo = cartService.delete(1, 27);
+        log.info("delete={}", gson.toJson(responseVo));
     }
 
 }

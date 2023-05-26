@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.imooc.mallsecond.dao.ProductMapper;
 import com.imooc.mallsecond.enums.ResponseEnum;
 import com.imooc.mallsecond.form.CartAddForm;
+import com.imooc.mallsecond.form.CartUpdateForm;
 import com.imooc.mallsecond.pojo.Cart;
 import com.imooc.mallsecond.pojo.Product;
 import com.imooc.mallsecond.service.ICartService;
@@ -143,5 +144,54 @@ public class CartServiceImpl implements ICartService {
 
         return ResponseVo.success(cartVo);
 
+    }
+
+    @Override
+    public ResponseVo<CartVo> update(Integer uid, Integer productId, CartUpdateForm cartUpdateForm) {
+        HashOperations<String, String, String> opsForHash = redisTemplate.opsForHash();
+        String redisKey = String.format(CART_REDIS_KEY_TEMPLATE, uid);
+        String value = opsForHash.get(redisKey, String.valueOf(productId));
+
+        Cart cart;
+        if (StringUtils.isEmpty(value)) {
+            //购物车没有该商品,报错
+            return ResponseVo.error(ResponseEnum.CART_PRODUCT_NOT_EXIST);
+
+        }
+        //有该商品,更新相应商品字段
+        //对json数据反序列化为原始对象
+        cart = gson.fromJson(value, Cart.class);
+        if (cartUpdateForm.getQuantity() != null && cartUpdateForm.getQuantity() >= 0) {
+            cart.setQuantity(cartUpdateForm.getQuantity());
+        }
+        if (cartUpdateForm.getSelected() != null) {
+            cart.setProductSelected(cartUpdateForm.getSelected());
+        }
+        opsForHash
+        .put(redisKey,
+            String.valueOf(productId),
+            gson.toJson(cart));
+
+        return list(uid);
+    }
+
+    @Override
+    public ResponseVo<CartVo> delete(Integer uid, Integer productId) {
+        HashOperations<String, String, String> opsForHash = redisTemplate.opsForHash();
+        String redisKey = String.format(CART_REDIS_KEY_TEMPLATE, uid);
+        String value = opsForHash.get(redisKey, String.valueOf(productId));
+
+        Cart cart;
+        if (StringUtils.isEmpty(value)) {
+            //购物车没有该商品,报错
+            return ResponseVo.error(ResponseEnum.CART_PRODUCT_NOT_EXIST);
+
+        }
+        //如果rediskey中存储的所有键值对数据都没了，那么这个rediskey也会消失
+        opsForHash
+            .delete(redisKey,
+                String.valueOf(productId));
+
+        return list(uid);
     }
 }
