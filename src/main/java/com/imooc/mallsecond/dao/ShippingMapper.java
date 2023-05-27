@@ -1,6 +1,7 @@
 package com.imooc.mallsecond.dao;
 
 import com.imooc.mallsecond.pojo.Shipping;
+import org.apache.ibatis.annotations.Param;
 
 public interface ShippingMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +15,6 @@ public interface ShippingMapper {
     int updateByPrimaryKeySelective(Shipping record);
 
     int updateByPrimaryKey(Shipping record);
+
+    int deleteByIdAndUid(@Param("uid") Integer uid, @Param("shippingId") Integer shippingId);
 }

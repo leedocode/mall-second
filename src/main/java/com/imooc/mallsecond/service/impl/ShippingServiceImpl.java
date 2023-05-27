@@ -1,10 +1,11 @@
-package com.imooc.mallsecond.service;
+package com.imooc.mallsecond.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.imooc.mallsecond.dao.ShippingMapper;
 import com.imooc.mallsecond.enums.ResponseEnum;
 import com.imooc.mallsecond.form.ShippingForm;
 import com.imooc.mallsecond.pojo.Shipping;
+import com.imooc.mallsecond.service.IShippingService;
 import com.imooc.mallsecond.vo.ResponseVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,24 @@ public class ShippingServiceImpl implements IShippingService {
 
     @Override
     public ResponseVo delete(Integer uid, Integer shippingId) {
-        return null;
+        int row = shippingMapper.deleteByIdAndUid(uid, shippingId);
+        if (row == 0) {
+            return ResponseVo.error(ResponseEnum.DELETE_SHIPPING_FAIL);
+        }
+        return ResponseVo.successForMsg("删除地址成功");
     }
 
     @Override
     public ResponseVo update(Integer uid, Integer shippingId, ShippingForm shippingForm) {
-        return null;
+        Shipping shipping = new Shipping();
+        BeanUtils.copyProperties(shippingForm, shipping);
+        shipping.setUserId(uid);
+        shipping.setId(shippingId);
+        int row = shippingMapper.updateByPrimaryKeySelective(shipping);
+        if (row == 0) {
+            return ResponseVo.error(ResponseEnum.ERROR);
+        }
+        return ResponseVo.success("更新地址成功");
     }
 
     @Override
