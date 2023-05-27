@@ -1,5 +1,8 @@
 package com.imooc.mallsecond.service;
 
+import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.imooc.mallsecond.MallSecondApplicationTests;
 import com.imooc.mallsecond.enums.ResponseEnum;
 import com.imooc.mallsecond.form.ShippingForm;
@@ -24,6 +27,8 @@ public class IShippingServiceTest extends MallSecondApplicationTests {
     private Integer shippingId = 5;
 
     private ShippingForm shippingForm;
+
+    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 
     @Before
@@ -62,5 +67,7 @@ public class IShippingServiceTest extends MallSecondApplicationTests {
 
     @Test
     public void list() {
+        ResponseVo<PageInfo> list = shippingService.list(2, 2, 1);
+        log.info("list={}",gson.toJson(list));
     }
 }

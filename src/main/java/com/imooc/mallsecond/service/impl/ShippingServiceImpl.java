@@ -1,5 +1,6 @@
 package com.imooc.mallsecond.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imooc.mallsecond.dao.ShippingMapper;
 import com.imooc.mallsecond.enums.ResponseEnum;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,7 +38,7 @@ public class ShippingServiceImpl implements IShippingService {
         }
         Map<String, Integer> map = new HashMap<>();
         map.put("shippingId", shipping.getId());
-        return ResponseVo.success(map);
+        return ResponseVo.success(map,"新建地址成功");
     }
 
     @Override
@@ -63,6 +65,10 @@ public class ShippingServiceImpl implements IShippingService {
 
     @Override
     public ResponseVo<PageInfo> list(Integer uid, Integer pageNum, Integer pageSize) {
-        return null;
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Shipping> shippingList = shippingMapper.selectByUid(uid);
+        PageInfo pageInfo = new PageInfo(shippingList);
+        return ResponseVo.success(pageInfo);
     }
 }
