@@ -1,15 +1,16 @@
-package com.imooc.mallsecond.pojo;
+package com.imooc.mallsecond.vo;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Data
-public class OrderItem {
-    private Integer id;
+/**
+ * 描述: TODO
+ */
 
-    private Integer userId;
+@Data
+public class OrderItemVo {
 
     private Long orderNo;
 
@@ -26,7 +27,5 @@ public class OrderItem {
     private BigDecimal totalPrice;
 
     private Date createTime;
-
-    private Date updateTime;
 
 }
