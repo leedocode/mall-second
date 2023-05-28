@@ -179,4 +179,19 @@
     </foreach>
   </insert>
 
+  <select id="selectByOrderNoSet" parameterType="java.util.Set" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mall_order_item
+    <!-- 如果不用<where>标签的话，在productIdSet为空的时候则会报错 -->
+    <where>
+      <if test="orderNoSet.size() > 0">
+        order_no in
+        <foreach collection="orderNoSet" item="item" index="index" open="(" separator="," close=")">
+          #{item}
+        </foreach>
+      </if>
+    </where>
+  </select>
+
 </mapper>
