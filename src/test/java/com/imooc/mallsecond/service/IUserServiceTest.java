@@ -1,11 +1,9 @@
-package com.imooc.mallsecond.service.impl;
+package com.imooc.mallsecond.service;
 
 import com.imooc.mallsecond.MallSecondApplicationTests;
 import com.imooc.mallsecond.enums.ResponseEnum;
 import com.imooc.mallsecond.enums.RoleEnum;
 import com.imooc.mallsecond.pojo.User;
-import com.imooc.mallsecond.service.ICategoryService;
-import com.imooc.mallsecond.service.IUserService;
 import com.imooc.mallsecond.vo.ResponseVo;
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 //增加事务注解，没有提交的话以下写入操作会自动回滚，不会对数据库进行写入
 @Transactional
-public class UserServiceImplTest extends MallSecondApplicationTests {
+public class IUserServiceTest extends MallSecondApplicationTests {
 
     public static final String USERNAME = "aaaa";
     public static final String PASSWORD = "aaaa";

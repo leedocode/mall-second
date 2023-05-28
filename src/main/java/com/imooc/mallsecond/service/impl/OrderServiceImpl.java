@@ -160,7 +160,37 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public ResponseVo<OrderVo> detail(Integer uid, Long orderNo) {
-        return null;
+
+        Order order = orderMapper.selectByOrderNo(orderNo);
+        if (order == null || !order.getUserId().equals(uid)) {
+            return ResponseVo.error(ResponseEnum.ORDER_NOT_EXIST);
+        }
+        Set<Long> orderNoSet = new HashSet<>();
+        orderNoSet.add(order.getOrderNo());
+        List<OrderItem> orderItemList = orderItemMapper.selectByOrderNoSet(orderNoSet);
+        Shipping shipping = shippingMapper.selectByPrimaryKey(order.getShippingId());
+        OrderVo orderVo = buildOrderVo(order, orderItemList, shipping);
+        return ResponseVo.success(orderVo);
+
+    }
+
+    public ResponseVo cancel(Integer uid, Long orderNo) {
+        Order order = orderMapper.selectByOrderNo(orderNo);
+        if (order == null || !order.getUserId().equals(uid)) {
+            return ResponseVo.error(ResponseEnum.ORDER_NOT_EXIST);
+        }
+        //简单起见只有未付款订单可以取消
+        if (!order.getStatus().equals(OrderStatusEnum.NO_PAY.getCode())) {
+            return ResponseVo.error(ResponseEnum.ORDER_STATUS_ERROR);
+        }
+
+        order.setStatus(OrderStatusEnum.CANCELED.getCode());
+        order.setCloseTime(new Date());
+        int row = orderMapper.updateByPrimaryKeySelective(order);
+        if (row <= 0) {
+            return ResponseVo.error(ResponseEnum.ERROR);
+        }
+        return ResponseVo.success();
     }
 
     private OrderVo buildOrderVo(Order order, List<OrderItem> orderItemList, Shipping shipping) {
@@ -173,8 +203,12 @@ public class OrderServiceImpl implements IOrderService {
             return orderItemVo;
         }).collect(Collectors.toList());
         orderVo.setOrderItemVoList(orderItemVoList);
-        orderVo.setShippingId(shipping.getId());
-        orderVo.setShippingVo(shipping);
+
+        if (shipping != null) {
+            orderVo.setShippingId(shipping.getId());
+            orderVo.setShippingVo(shipping);
+        }
+
         return orderVo;
     }
 
