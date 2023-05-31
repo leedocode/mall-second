@@ -24,7 +24,7 @@ public class IShippingServiceTest extends MallSecondApplicationTests {
     private IShippingService shippingService;
 
     private Integer uid = 2;
-    private Integer shippingId = 5;
+    private Integer shippingId = 6;
 
     private ShippingForm shippingForm;
 

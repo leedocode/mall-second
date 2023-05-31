@@ -102,7 +102,7 @@ public class CartServiceImpl implements ICartService {
             productMap.put(product.getId(), product);
         }
 
-
+        //rediskey中存放的购物车数据在entrySet里，
         for (Map.Entry<String, String> entry : entries.entrySet()) {
             Integer productId = Integer.valueOf(entry.getKey());
             Cart cart = gson.fromJson(entry.getValue(), Cart.class);

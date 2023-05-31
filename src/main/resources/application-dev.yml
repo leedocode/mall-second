@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: cxl1123ZML
+    url: jdbc:mysql://localhost:3306/mall?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  rabbitmq:
+    addresses: 81.70.212.195
+    port: 5672
+    username: guest
+    password: guest
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    #控制台日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mappers/*.xml
+
+excludeurl:
+  strings:
+    - /user/login
+    - /user/register
+    - /categories
+    - /products
+    # /products/*匹配的是下一级路径，而/products/**匹配的是任意层级的路径
+    - /products/*
+    - /error
+server:
+  port: 8081
+
+logging:
+  file:
+    path: /Users/liweijie/IdeaProjects/mall-second/logs
